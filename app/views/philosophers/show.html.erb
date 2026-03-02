@@ -1,0 +1,13 @@
+<!-- FIle name: show.html.erb -->
+<!-- Purpose: Show the edit and delete buttons for philosopher along with the philosopher page-->
+
+<p style="color: green"><%= notice %></p>
+
+<%= render @philosopher %>
+
+<div>
+  <%= link_to "Edit this philosopher", edit_philosopher_path(@philosopher) %> |
+  <%= link_to "Back to philosophers", philosophers_path %>
+
+  <%= button_to "Destroy this philosopher", @philosopher, method: :delete %>
+</div>

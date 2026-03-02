@@ -1,0 +1,13 @@
+<!-- File name: show.html.erb -->
+<!-- Purpose: Show a quote and its edit and back to quote functionality -->
+
+<p style="color: green"><%= notice %></p>
+
+<%= render @quote %>
+
+<div>
+  <%= link_to "Edit this quote", edit_quote_path(@quote) %> |
+  <%= link_to "Back to quotes", quotes_path %>
+
+  <%= button_to "Destroy this quote", @quote, method: :delete , class: "btn btn-danger"%>
+</div>

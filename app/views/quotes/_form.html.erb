@@ -1,0 +1,118 @@
+<!-- File name: _form.html.erb -->
+<!-- Purpose: Create a for to gather quote details -->
+
+<% if @quote.errors.any? %>
+  <div class="alert alert-danger">
+    <ul>
+      <% @quote.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<!-- form method is not hardcoded because this form is used for bith create and edit -->
+<%= form_with(model: @quote, local: true) do |f| %>
+  <%= f.hidden_field :user_id, value: current_user.id %>
+
+  <!-- Form fields associated with the recipes table -->
+  <!-- Get quote_content -->
+  <div class="form-group" style="padding-bottom: 10px;">
+    <%= f.text_area :quote_content, placeholder: 'Quote Title', class: 'form-control' %>
+  </div>
+
+  <!-- Get pub_year -->
+  <div class="form-group" style="padding-bottom: 10px;">
+    <%= f.date_field  :pub_year, placeholder: 'Year Published', class: 'form-control' %>
+  </div>
+
+  <!-- Get comment -->
+  <div class="form-group" style="padding-bottom: 10px;">
+    <%= f.textarea :comment, placeholder: 'Comments', class: 'form-control' %>
+  </div>
+
+  <!-- Get is_public -->
+  <div class="form-check" style="padding-bottom: 10px;">
+    <%= f.label :is_public do %>
+    Public
+    <%= f.check_box :is_public, class: "form-check-input" %>
+    <% end %>
+  </div>
+  
+  <!-- Get philosopher details -->
+  <h4>Philosopher Details (optional)</h4>
+  <%= f.fields_for :philosopher do |pf| %>
+    <%= pf.hidden_field :id if pf.object.persisted? && pf.object.id != 1 %>
+    <!-- Get fname -->
+    <div class="form-group" style="padding-bottom: 10px;">
+      <%= pf.text_field :fname, class: "form-control", placeholder: "First Name" %>
+    </div>
+
+    <!-- Get lname -->
+    <div class="form-group" style="padding-bottom: 10px;">
+      <%= pf.text_field :lname, class: "form-control", placeholder: "Last Name" %>
+    </div>
+
+    <!-- Get birth_year -->
+    <p>Birth year:</p>
+    <div class="form-group" style="padding-bottom: 10px;">
+      <%= pf.date_field :birth_year, class: "form-control", placeholder: "Birth Year" %>
+    </div>
+
+    <!-- Get death_year -->
+    <p>Death year:</p>
+    <div class="form-group" style="padding-bottom: 10px;">
+      <%= pf.date_field :death_year, class: "form-control", placeholder: "Death Year" %>
+    </div>
+
+    <!-- Get biography -->
+    <div class="form-group" style="padding-bottom: 10px;">
+      <%= pf.text_area :biography, class: "form-control", placeholder: "Short Biography" %>
+   </div>
+  <% end %>
+  
+  <!-- Get categories -->
+  <div id="categories-container">
+    <% @quote.quote_categories.each do |quote_category| %>
+      <%= f.fields_for :quote_categories, quote_category do |qc| %>
+        <div class="category-field row mb-2">
+          <div class="col-auto">
+            <%= qc.label :category_id, "Category", class: "form-label d-inline-block me-2" %>
+            <%= qc.select :category_id, Category.all.collect { |cat| [cat.name, cat.id] }, { include_blank: true }, class: "form-control d-inline-block" %>
+          </div>
+
+          <div class="col-auto align-self-end">
+            <%= qc.hidden_field :_destroy, value: "0", class: "_destroy-field" %>
+            <%= link_to '[-] Remove this category', '#', class: 'remove-category', style: "color: red; text-decoration: none;" %> <!-- Allow users to remove a field -->
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <!-- Create a submit button for both instances: create and edit -->
+  <div class="mt-3">
+    <%= f.submit @quote.persisted? ? 'Update Quote' : 'Create Quote', class: 'btn btn-primary btn-lg' %>
+  </div>
+<% end %>
+
+<!-- Segment of javascript to add event listeners -->
+<script>
+// Wait for the document to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+  // Attach an event listener to detect clicks on the "Remove this category" link
+  document.addEventListener('click', function(e) {
+    if (e.target && e.target.classList.contains('remove-category')) {
+      // Prevent the default action of the link
+      e.preventDefault();
+
+      // Get all the category fields
+      const categoryFields = document.querySelectorAll('.category-field');
+      // Only remove an category field if there's more than one
+      if (categoryFields.length > 1) {
+        e.target.closest('.category-field').remove();
+      }
+    }
+  });
+});
+</script>

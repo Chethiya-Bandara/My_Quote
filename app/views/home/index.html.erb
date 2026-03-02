@@ -1,0 +1,16 @@
+<!-- File name: index.html.erb-->
+<!-- Purpose: This is the code segment for the home page -->
+
+<h1>Welcome to MyQuote!</h1>
+<p>Browse through millions of philosophical quotes to your liking!</p>
+<!-- Display recently added quotes -->
+<h3>Recently Added Quotes</h3> 
+<hr /> 
+<% @quotes.each do |quote| %> 
+    <div class="card bg-body-tertiary" style="margin-bottom:10px"> 
+    <div class="card-body"> 
+        <h4 class="card-title"><%= quote.quote_content %></h4> 
+        <p class="card-text"><%= quote.philosopher.present? ? "#{quote.philosopher.fname} #{quote.philosopher.lname}".strip : "Anonymous" %><br />[<a href="/quotes/<%= quote.id %>">Read full quote</a>]</p> 
+    </div> 
+    </div> 
+<% end %> 

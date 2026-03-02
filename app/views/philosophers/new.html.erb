@@ -1,0 +1,14 @@
+<!-- File name: new.html.erb -->
+<!-- Purpose: Provide the functionaloity to add new philosophers -->
+
+<% content_for :title, "New philosopher" %>
+
+<h1>New philosopher</h1>
+
+<%= render "form", philosopher: @philosopher %>
+
+<br>
+
+<div>
+  <%= link_to "Back to philosophers", philosophers_path %>
+</div>

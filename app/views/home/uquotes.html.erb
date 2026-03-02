@@ -1,0 +1,15 @@
+<!-- File name: uquotes.html.erb-->
+<!-- Purpose: creates the Page to display the logged in users quotes -->
+
+<h3>Your Quotes</h3> 
+<hr /> 
+<!-- Display quotes along with its philosopher by looping through all quotes -->
+<% @quotes.each do |quote| %> 
+    <div class="card bg-body-tertiary" style="margin-bottom:10px"> 
+    <div class="card-body"> 
+        <h4 class="card-title"><%= quote.quote_content %></h4> 
+        <!-- Display philosopher name by referring to the phiolosopher_id -->
+        <p class="card-text"><%= quote.philosopher.present? ? "#{quote.philosopher.fname} #{quote.philosopher.lname}".strip : "Anonymous" %><br />[<a href="/quotes/<%= quote.id %>">Read full quote</a>]</p> 
+    </div> 
+    </div> 
+<% end %> 

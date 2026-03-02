@@ -1,0 +1,14 @@
+<!-- File name: new.html.erb -->
+<!-- Purpose: Render the form to create a new quote -->
+
+<% content_for :title, "New quote" %>
+
+<h1>New quote</h1>
+
+<%= render "form", quote: @quote %>
+
+<br>
+
+<div>
+  <%= link_to "Back to quotes", quotes_path %>
+</div>

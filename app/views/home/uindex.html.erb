@@ -1,0 +1,12 @@
+<!--File name: uindex.html.erb-->
+<!-- Purpose: This is the code ofr the standard user landing page -->
+
+<p style="color: green"><%= notice %></p> 
+<p>Hello <%= session[:fname] %>!</p> 
+<h3>You are a standard user!</h3>
+<strong>This means that you can create, edit, and delete quotes and view quotes published by other users.</strong> 
+<br>
+<strong>Dive into the world of philosophical quotes through MyQuote!</strong>
+<br>
+<!-- Add link to edit account details -->
+<%= link_to "Edit your account details", edit_user_path(session[:user_id]) %>

@@ -1,0 +1,83 @@
+<!-- file name: _header.html.erb-->
+<!-- Purpose: Create a navigation bar -->
+
+<nav class="navbar bg-dark border-bottom border-body navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+  <div class="container-fluid">
+    <!-- <a class="navbar-brand" href="#">MQ Home</a> -->
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- Adding the buttons in the nav bar -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- Display the home button -->
+        <li class="nav-item">
+        <%= link_to "Home", root_path, class:"nav-link" %>
+        </li>
+        <!-- Display the search button -->
+        <li class="nav-item">
+        <li><a class="nav-link" href="/search">Search</a></li> 
+        </li>
+        <!-- Display the about button -->
+        <li class="nav-item">
+        <%= link_to "About", about_path, class:"nav-link" %>
+        </li>
+        <!-- Display the Sign up button if user is not logged in-->
+        <% if !logged_in? %> 
+          <li class="nav-item"> 
+          <li><%= link_to 'Sign Up', new_user_path, class:"nav-link" %></li> 
+          </li> 
+        <% end %> 
+        <!-- Display the sign in button if user is not logged in -->
+        <% if !logged_in? %> 
+          <li class="nav-item"> 
+          <li><%= link_to 'Sign In', login_path, class:"nav-link" %></li> 
+          </li> 
+        <% end %>
+        <!-- Display the sign out button if user is logged in-->
+        <% if logged_in? %> 
+          <li class="nav-item"> 
+          <%= button_to "Sign Out", logout_path, method: :delete, class:"btn btn-link nav-link"%> 
+          </li> 
+        <% end %> 
+        <!-- Display the standard dropdown menu -->
+        <% if logged_in? && !is_administrator? %> 
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 
+          User 
+        </a> 
+        <ul class="dropdown-menu"> 
+          <!-- Display the my account button -->
+          <%= link_to "My Account", userhome_path, class:"dropdown-item" %> 
+          <!-- Display the my quotes button -->
+          <%= link_to "My Quotes", your_quotes_path, class:"dropdown-item" %> 
+          <li><hr class="dropdown-divider"></li> 
+          <!-- Display the add new quote button -->
+          <%= link_to "Add New Quote", new_quote_path, class:"dropdown-item" %> 
+        </ul> 
+        </li> 
+        <% end %> 
+        
+        <!-- Display the admin dropdown menu -->
+        <% if logged_in? && is_administrator? %> 
+          <li class="nav-item dropdown"> 
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admin</a> 
+            <ul class="dropdown-menu"> 
+              <!-- Display the admin home button -->
+              <%= link_to "Admin Home", admin_path, class:"dropdown-item" %> 
+                <!-- Display the manage users button -->
+                <li><%= link_to 'Manage Users', users_path, class:"dropdown-item" %></li> 
+            </ul> 
+          </li> 
+        <% end %> 
+
+        <!--
+        <li class="nav-item">
+          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+        </li>
+        -->
+      </ul>
+    </div>
+  </div>
+</nav>

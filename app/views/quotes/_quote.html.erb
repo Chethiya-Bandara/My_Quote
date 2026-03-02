@@ -1,0 +1,62 @@
+<!-- File name: _quote.html.erb -->
+<!-- Purpose: Display all quote fields -->
+
+<div id="<%= dom_id quote %>">
+  <p>
+    <strong>Quote content:</strong>
+    <%= quote.quote_content %>
+  </p>
+
+  <p>
+    <strong>Published year:</strong>
+    <%= quote.pub_year || "Unknown" %>
+  </p>  
+
+  <p>
+    <strong>Categories:</strong>
+  </p>
+  <ul>
+    <!-- Display each category in a list -->
+    <% quote.quote_categories.each do |qc|%>
+      <li>
+        <%= qc.category.name%>
+      </li>
+    <% end %>
+  </ul>
+
+  <p>
+    <strong>Is public:</strong>
+    <%= quote.is_public %>
+  </p>
+
+  <p>
+    <strong>Comment:</strong>
+    <%= quote.comment || "None" %>
+  </p>
+
+  <p>
+    <strong>User:</strong>
+    <%= "#{quote.user.fname}" %>
+  </p>
+
+  <p>
+    <strong>Philosopher Name:</strong>
+    <%= quote.philosopher.present? ? "#{quote.philosopher.fname} #{quote.philosopher.lname}".strip : "Anonymous" %>
+  </p>
+
+  <p>
+    <strong>Birth Year:</strong>
+    <%= quote.philosopher&.birth_year || "Unknown" %>
+  </p>
+
+  <p>
+    <strong>Death Year:</strong>
+    <%= quote.philosopher&.death_year || "Unknown" %>
+  </p>
+
+  <p>
+    <strong>Biography:</strong>
+    <%= quote.philosopher&.biography.presence || "None" %>
+  </p>
+
+</div>

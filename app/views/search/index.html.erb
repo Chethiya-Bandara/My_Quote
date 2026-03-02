@@ -1,0 +1,30 @@
+<!-- File name: index.html.erb -->
+<!-- Purpose: Create the search page -->
+
+
+<!-- Search funtion -->
+<h3 style="padding-top: 10px;">Search for Quotes by category</h3> 
+<%= form_tag search_path, method: :get do %> 
+    <div class="form-group" style="padding-bottom: 10px;"> 
+    <%= text_field_tag :category_query, params[:category_query], placeholder: 'Enter category', class: "form-control" %> 
+    </div> 
+    <%= submit_tag 'Search Quotes', class: "btn btn-primary" %> 
+<% end %> 
+
+<! Return results (quote and published year) if matches are found -->
+<% if params[:category_query].present? %>
+    <% if @quotematch.present? %>
+        <h4 style="padding-top: 15px;">Results:</h4>
+            <% @quotematch.each do |quote| %>
+            <div class = "card bg-body-tertiary" style="margin-bottom:10px">
+            <div class="card-body">
+                <h5 class="card-title"><%= quote.quote_content %></h5>
+                <p class="card-text"><%= quote.philosopher.present? ? "#{quote.philosopher.fname} #{quote.philosopher.lname}".strip : "Anonymous" %><br />[<a href="/quotes/<%= quote.id %>">Read full quote</a>]</p>
+            </div>
+            </div>
+            <br />
+            <% end %>
+    <% else %>
+        <p>No matching quotes found.</p>
+    <% end %>
+<% end %>
